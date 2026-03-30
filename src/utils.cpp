@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
-#include "utils.h"
+#include "utils.hpp"
 
 using namespace std;
 
@@ -40,7 +40,7 @@ vector<Ponto> lerDados(const string& nomeArquivo, int& n, int& m, int& g)
 
 void registrarSaida(const string& nomeArquivo, int geracao, const Individuo& melhor) 
 {
-    // Abre em modo 'append' para não apagar as gerações anteriores [cite: 112]
+    
     ofstream arquivo(nomeArquivo, ios::app);
 
     if (arquivo.is_open()) 
@@ -103,6 +103,22 @@ void selecionarIndividuos(vector<Individuo>& populacao, Individuo& melhorIndivid
             PiorIndividuo = populacao[i];
             indicePior = i;
         }
+    }
+}
+
+void mutacao(Individuo& individuo) 
+{
+    // Gera o delta (pequena variação controlada), por exemplo, entre -1.0 e 1.0
+    double delta = (rand() % 21 - 10) / 10.0;
+
+    // Sorteia 0 ou 1 para decidir qual gene sofrerá a mutação
+    if (rand() % 2 == 0) 
+    {
+        individuo.a += delta;
+    } 
+    else 
+    {
+        individuo.b += delta;
     }
 }
 

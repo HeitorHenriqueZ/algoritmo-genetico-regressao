@@ -1,7 +1,8 @@
 #include <iostream>
 #include <ctime>
-#include "utils.h"
-#include "types.h"
+#include <fstream>
+#include "utils.hpp"
+#include "types.hpp"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ int main()
     srand(time(NULL));
     
 
-    vector<Ponto> pontos = lerDados("input.dat", n, m, g);
+    vector<Ponto> pontos = lerDados("data/input.dat", n, m, g);
 
     if (pontos.empty()) 
     {
@@ -33,9 +34,14 @@ int main()
 
     selecionarIndividuos(populacao, melhorIndividuo1, melhorIndividuo2, PiorIndividuo, indicePior ,m);
 
+    std::ofstream limpar("data/output.dat", std::ios::out | std::ios::trunc);
+    limpar.close();
+    
     for(int i = 0; i < g; i++)
     {
         crossover(melhorIndividuo1, melhorIndividuo2, Filho);
+
+        mutacao(Filho);
 
         varrerFilho(Filho, pontos, n);
 
@@ -43,7 +49,16 @@ int main()
 
         selecionarIndividuos(populacao, melhorIndividuo1, melhorIndividuo2, PiorIndividuo, indicePior ,m);
 
-        registrarSaida("output.dat", i + 1, melhorIndividuo1);
+        registrarSaida("data/output.dat", i + 1, melhorIndividuo1);
     }
+    cout << "\n======================================" << endl;
+    cout << "          RESULTADO FINAL             " << endl;
+    cout << "======================================" << endl;
+    cout << "Melhor reta: y = " << melhorIndividuo1.a << "x + " << melhorIndividuo1.b << endl;
+    cout << "Parametro a: " << melhorIndividuo1.a << endl;
+    cout << "Parametro b: " << melhorIndividuo1.b << endl;
+    cout << "Erro medio:  " << melhorIndividuo1.erro << endl;
+    cout << "Fitness:     " << melhorIndividuo1.fitness << endl;
+    cout << "======================================" << endl;
     return 0;
 }
