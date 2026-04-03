@@ -144,8 +144,6 @@ void crossover(Individuo& pai1, Individuo& pai2, Individuo& filho)
         filho.b = pai2.b;
     }
 
-    filho.a += (rand() % 21 - 10) / 10.0;
-    filho.b += (rand() % 21 - 10) / 10.0;
 }
 
 void varrerFilho(Individuo& filho, const vector<Ponto>& pontos, int n) 
