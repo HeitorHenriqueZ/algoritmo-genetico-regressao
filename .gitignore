@@ -5,7 +5,7 @@ build/
 app
 
 Ignora todos arquivos .dat dentro da pasta data
-data/.dat
+data/*.dat
 
 Configurações do editor VS Code
 .vscode/
